@@ -1,4 +1,5 @@
 import * as Phaser from "phaser";
+import { CONSTANTS } from "./constants";
 
 class InsideScene extends Phaser.Scene {
   constructor() {
@@ -13,10 +14,14 @@ class InsideScene extends Phaser.Scene {
     }
   }
   preload() {
-    this.load.spritesheet("player", "src/assets/images/wizard_run.png", {
-      frameWidth: 64,
-      frameHeight: 64,
-    });
+    this.load.spritesheet(
+      CONSTANTS.KEYS.SPRITES.PLAYER,
+      "src/assets/images/wizard_run.png",
+      {
+        frameWidth: 64,
+        frameHeight: 64,
+      }
+    );
     this.load.image("rick", "src/assets/images/rick.png");
   }
 

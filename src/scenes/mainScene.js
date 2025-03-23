@@ -1,45 +1,7 @@
 import * as Phaser from "phaser";
+import { CONSTANTS } from "./constants";
 
 class MainScene extends Phaser.Scene {
-  // Do not change constant values in other parts of the code
-  CONSTANTS = {
-    DEPTHS: {
-      Background: 0,
-      Foreground: 1,
-      UIBackground: 10,
-      UIForeground: 11,
-    },
-    // Keys are string references to anything phaser has created
-    // A poor system, imo, but you can treat this as an index
-    KEYS: {
-      TILED: {
-        // these values come from the Tiled map file directly
-        MAP: "map",
-        TILE_SETS: {
-          TILES: "Tiles",
-          BUILDING_TILES: "building_tilemap",
-        },
-        LAYERS: {
-          TILE_LAYER: "Tile Layer 1",
-          BUILDING_LAYER: "Buildings",
-        },
-      },
-      SPRITES: {
-        PLAYER: "player",
-        NPC: "catSprite",
-      },
-      IMAGES: {
-        TILES: "tiles",
-        BUILDING_TILES: "buildingTiles",
-        STUFFED_PEANUT: "stuffedPeanut",
-        PHOTO_FRAME: "photoFrame",
-      },
-      ANIMATIONS: {
-        WALK: "walk",
-      },
-    },
-  };
-
   // Game variables that are likely to change values over time
   state = {
     inventory: [], // Right now this array just holds string values
@@ -81,9 +43,9 @@ class MainScene extends Phaser.Scene {
 
       let itemName = "Unknown Item";
 
-      if (item.texture.key === this.CONSTANTS.KEYS.IMAGES.STUFFED_PEANUT) {
+      if (item.texture.key === CONSTANTS.KEYS.IMAGES.STUFFED_PEANUT) {
         itemName = "Stuffed Peanut";
-      } else if (item.texture.key === this.CONSTANTS.KEYS.IMAGES.PHOTO_FRAME) {
+      } else if (item.texture.key === CONSTANTS.KEYS.IMAGES.PHOTO_FRAME) {
         itemName = "Picture Frame";
       }
 
@@ -110,43 +72,40 @@ class MainScene extends Phaser.Scene {
   preload() {
     // Player Sprite
     this.load.spritesheet(
-      this.CONSTANTS.KEYS.SPRITES.PLAYER,
+      CONSTANTS.KEYS.SPRITES.PLAYER,
       "src/assets/images/wizard_run.png",
       { frameWidth: 64, frameHeight: 64 } // Adjust this based on your sprite size
     );
 
     this.load.spritesheet(
-      this.CONSTANTS.KEYS.SPRITES.NPC,
+      CONSTANTS.KEYS.SPRITES.NPC,
       "src/assets/images/cat_spritesheet.png",
       { frameWidth: 64, frameHeight: 64 }
     );
 
     // Tiled map JSON file
     this.load.tilemapTiledJSON(
-      this.CONSTANTS.KEYS.TILED.MAP,
+      CONSTANTS.KEYS.TILED.MAP,
       "src/assets/tiles/map.json"
     );
 
     // The first tileset defined in the Tilemap JSON file
-    this.load.image(
-      this.CONSTANTS.KEYS.IMAGES.TILES,
-      "src/assets/tiles/Tiles.png"
-    );
+    this.load.image(CONSTANTS.KEYS.IMAGES.TILES, "src/assets/tiles/Tiles.png");
 
     // The second tileset defined in the Tilemap JSON file
     this.load.image(
-      this.CONSTANTS.KEYS.IMAGES.BUILDING_TILES,
+      CONSTANTS.KEYS.IMAGES.BUILDING_TILES,
       "src/assets/tiles/building_tilemap.png"
     );
 
     // Items
     this.load.image(
-      this.CONSTANTS.KEYS.IMAGES.STUFFED_PEANUT,
+      CONSTANTS.KEYS.IMAGES.STUFFED_PEANUT,
       "src/assets/images/stuffedPeanut.png"
     );
 
     this.load.image(
-      this.CONSTANTS.KEYS.IMAGES.PHOTO_FRAME,
+      CONSTANTS.KEYS.IMAGES.PHOTO_FRAME,
       "src/assets/images/photo_frame.png"
     );
   }
@@ -170,37 +129,37 @@ class MainScene extends Phaser.Scene {
    */
   #createMap() {
     // Creates the tilemap from the tiled JSON file loaded in preload
-    const map = this.make.tilemap({ key: this.CONSTANTS.KEYS.TILED.MAP });
+    const map = this.make.tilemap({ key: CONSTANTS.KEYS.TILED.MAP });
 
     // The first argument, in the below function calls, is the name of the tileset from the tiled map file
     // The second argument is the key used in the preload function to load the file into phaser
     // Essentially we are linking information about the 'tilesets' loaded from tiled and adding them into phaser
     const tileSet = map.addTilesetImage(
-      this.CONSTANTS.KEYS.TILED.TILE_SETS.TILES,
-      this.CONSTANTS.KEYS.IMAGES.TILES
+      CONSTANTS.KEYS.TILED.TILE_SETS.TILES,
+      CONSTANTS.KEYS.IMAGES.TILES
     );
     const buildingTileSet = map.addTilesetImage(
-      this.CONSTANTS.KEYS.TILED.TILE_SETS.BUILDING_TILES,
-      this.CONSTANTS.KEYS.IMAGES.BUILDING_TILES
+      CONSTANTS.KEYS.TILED.TILE_SETS.BUILDING_TILES,
+      CONSTANTS.KEYS.IMAGES.BUILDING_TILES
     );
 
     // Load the background layer
     this.layers.background = map.createLayer(
-      this.CONSTANTS.KEYS.TILED.LAYERS.TILE_LAYER,
+      CONSTANTS.KEYS.TILED.LAYERS.TILE_LAYER,
       tileSet,
       0,
       0
     );
-    this.layers.background.setDepth(this.CONSTANTS.DEPTHS.Background);
+    this.layers.background.setDepth(CONSTANTS.DEPTHS.Background);
 
     // Load the Buildings layer
     this.layers.building = map.createLayer(
-      this.CONSTANTS.KEYS.TILED.LAYERS.BUILDING_LAYER,
+      CONSTANTS.KEYS.TILED.LAYERS.BUILDING_LAYER,
       buildingTileSet,
       0,
       0
     );
-    this.layers.building.setDepth(this.CONSTANTS.DEPTHS.Foreground); // Ensure it's above the background
+    this.layers.building.setDepth(CONSTANTS.DEPTHS.Foreground); // Ensure it's above the background
   }
 
   #createEntities() {
@@ -208,7 +167,7 @@ class MainScene extends Phaser.Scene {
     this.entities.player = this.physics.add.sprite(
       100,
       100,
-      this.CONSTANTS.KEYS.SPRITES.PLAYER,
+      CONSTANTS.KEYS.SPRITES.PLAYER,
       0
     );
     this.entities.player.setCollideWorldBounds(true); // Prevents leaving the screen
@@ -216,19 +175,19 @@ class MainScene extends Phaser.Scene {
     this.entities.player.setSize(32, 48); // Adjust width and height as needed
     this.entities.player.setOffset(16, 22); // Adjust offset to center the hitbox
 
-    this.entities.player.setDepth(this.CONSTANTS.DEPTHS.Foreground);
+    this.entities.player.setDepth(CONSTANTS.DEPTHS.Foreground);
 
     this.entities.cat = this.physics.add.sprite(
       300,
       300,
-      this.CONSTANTS.KEYS.SPRITES.NPC,
+      CONSTANTS.KEYS.SPRITES.NPC,
       0
     );
-    this.entities.cat.setDepth(this.CONSTANTS.DEPTHS.Foreground);
+    this.entities.cat.setDepth(CONSTANTS.DEPTHS.Foreground);
 
     this.anims.create({
       key: "catSleep",
-      frames: this.anims.generateFrameNumbers(this.CONSTANTS.KEYS.SPRITES.NPC, {
+      frames: this.anims.generateFrameNumbers(CONSTANTS.KEYS.SPRITES.NPC, {
         start: 8,
         end: 11,
       }),
@@ -239,11 +198,11 @@ class MainScene extends Phaser.Scene {
     this.entities.cat.anims.play("catSleep", true);
 
     this.anims.create({
-      key: this.CONSTANTS.KEYS.ANIMATIONS.WALK,
-      frames: this.anims.generateFrameNumbers(
-        this.CONSTANTS.KEYS.SPRITES.PLAYER,
-        { start: 0, end: 5 }
-      ), // Using all frames
+      key: CONSTANTS.KEYS.ANIMATIONS.WALK,
+      frames: this.anims.generateFrameNumbers(CONSTANTS.KEYS.SPRITES.PLAYER, {
+        start: 0,
+        end: 5,
+      }), // Using all frames
       frameRate: 10,
       repeat: -1,
     });
@@ -253,18 +212,18 @@ class MainScene extends Phaser.Scene {
     const peanut = this.entities.items.create(
       150,
       150,
-      this.CONSTANTS.KEYS.IMAGES.STUFFED_PEANUT
+      CONSTANTS.KEYS.IMAGES.STUFFED_PEANUT
     );
     peanut.setScale(0.1);
-    peanut.setDepth(this.CONSTANTS.DEPTHS.Foreground); // Ensure it’s above the background
+    peanut.setDepth(CONSTANTS.DEPTHS.Foreground); // Ensure it’s above the background
 
     const photoFrame = this.entities.items.create(
       200,
       200,
-      this.CONSTANTS.KEYS.IMAGES.PHOTO_FRAME
+      CONSTANTS.KEYS.IMAGES.PHOTO_FRAME
     );
     photoFrame.setScale(0.1);
-    photoFrame.setDepth(this.CONSTANTS.DEPTHS.Foreground);
+    photoFrame.setDepth(CONSTANTS.DEPTHS.Foreground);
 
     // ADD THE DOOR ENTITY (Trigger Zone)
     this.entities.door = this.physics.add.staticSprite(400, 400, null);
@@ -283,7 +242,7 @@ class MainScene extends Phaser.Scene {
       0.7
     ); // Semi-transparent black box
     this.ui.inventory.background.setOrigin(0, 0);
-    this.ui.inventory.background.setDepth(this.CONSTANTS.DEPTHS.UIBackground);
+    this.ui.inventory.background.setDepth(CONSTANTS.DEPTHS.UIBackground);
     this.ui.inventory.background.setVisible(false); // Hide by default
 
     // Inventory text
@@ -291,7 +250,7 @@ class MainScene extends Phaser.Scene {
       fontSize: "20px",
       fill: "#fff",
     });
-    this.ui.inventory.text.setDepth(this.CONSTANTS.DEPTHS.UIForeground);
+    this.ui.inventory.text.setDepth(CONSTANTS.DEPTHS.UIForeground);
     this.ui.inventory.text.setVisible(false);
   }
 
@@ -332,64 +291,40 @@ class MainScene extends Phaser.Scene {
     // Diagonal Movement
     if (this.inputs.cursors.left.isDown && this.inputs.cursors.up.isDown) {
       this.entities.player.setVelocity(-200, -200);
-      this.entities.player.anims.play(
-        this.CONSTANTS.KEYS.ANIMATIONS.WALK,
-        true
-      );
+      this.entities.player.anims.play(CONSTANTS.KEYS.ANIMATIONS.WALK, true);
     } else if (
       this.inputs.cursors.right.isDown &&
       this.inputs.cursors.up.isDown
     ) {
       this.entities.player.setVelocity(200, -200);
-      this.entities.player.anims.play(
-        this.CONSTANTS.KEYS.ANIMATIONS.WALK,
-        true
-      );
+      this.entities.player.anims.play(CONSTANTS.KEYS.ANIMATIONS.WALK, true);
     } else if (
       this.inputs.cursors.left.isDown &&
       this.inputs.cursors.down.isDown
     ) {
       this.entities.player.setVelocity(-200, 200);
-      this.entities.player.anims.play(
-        this.CONSTANTS.KEYS.ANIMATIONS.WALK,
-        true
-      );
+      this.entities.player.anims.play(CONSTANTS.KEYS.ANIMATIONS.WALK, true);
     } else if (
       this.inputs.cursors.right.isDown &&
       this.inputs.cursors.down.isDown
     ) {
       this.entities.player.setVelocity(200, 200);
-      this.entities.player.anims.play(
-        this.CONSTANTS.KEYS.ANIMATIONS.WALK,
-        true
-      );
+      this.entities.player.anims.play(CONSTANTS.KEYS.ANIMATIONS.WALK, true);
     }
 
     // Regular movement
     else if (this.inputs.cursors.left.isDown) {
       this.entities.player.setVelocityX(-200);
-      this.entities.player.anims.play(
-        this.CONSTANTS.KEYS.ANIMATIONS.WALK,
-        true
-      );
+      this.entities.player.anims.play(CONSTANTS.KEYS.ANIMATIONS.WALK, true);
     } else if (this.inputs.cursors.right.isDown) {
       this.entities.player.setVelocityX(200);
-      this.entities.player.anims.play(
-        this.CONSTANTS.KEYS.ANIMATIONS.WALK,
-        true
-      );
+      this.entities.player.anims.play(CONSTANTS.KEYS.ANIMATIONS.WALK, true);
     } else if (this.inputs.cursors.up.isDown) {
       this.entities.player.setVelocityY(-200);
-      this.entities.player.anims.play(
-        this.CONSTANTS.KEYS.ANIMATIONS.WALK,
-        true
-      );
+      this.entities.player.anims.play(CONSTANTS.KEYS.ANIMATIONS.WALK, true);
     } else if (this.inputs.cursors.down.isDown) {
       this.entities.player.setVelocityY(200);
-      this.entities.player.anims.play(
-        this.CONSTANTS.KEYS.ANIMATIONS.WALK,
-        true
-      );
+      this.entities.player.anims.play(CONSTANTS.KEYS.ANIMATIONS.WALK, true);
     } else {
       this.entities.player.anims.stop();
     }
