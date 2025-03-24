@@ -116,6 +116,23 @@ class MainScene extends Phaser.Scene {
     this.#createInventoryUI();
     this.#createPhysics();
     this.#createInputs();
+
+    this.time.delayedCall(100, () => {
+      const blinkOverlay = this.add
+        .rectangle(0, 0, this.scale.width, this.scale.height, 0x000000)
+        .setOrigin(0, 0)
+        .setScrollFactor(0)
+        .setDepth(100)
+        .setAlpha(1);
+
+      this.tweens.add({
+        targets: blinkOverlay,
+        alpha: 0,
+        duration: 1000,
+        ease: "Quad.easeOut",
+        onComplete: () => blinkOverlay.destroy(),
+      });
+    });
   }
 
   update() {
