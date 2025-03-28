@@ -216,7 +216,7 @@ class MainScene extends Phaser.Scene {
 
     this.entities.cat = this.physics.add.sprite(
       300,
-      300,
+      325,
       CONSTANTS.KEYS.SPRITES.NPC,
       0
     );
