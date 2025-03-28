@@ -98,6 +98,17 @@ class MainScene extends Phaser.Scene {
       "src/assets/tiles/building_tilemap.png"
     );
 
+    // The third tileset defined in the Tilemap JSON file
+    this.load.image(
+      CONSTANTS.KEYS.IMAGES.INTERIORS,
+      "src/assets/tiles/interiors.png"
+    );
+    // The third tileset defined in the Tilemap JSON file
+    this.load.image(
+      CONSTANTS.KEYS.IMAGES.INTERIORS,
+      "src/assets/tiles/interiors.png"
+    );
+
     // Items
     this.load.image(
       CONSTANTS.KEYS.IMAGES.STUFFED_PEANUT,
@@ -159,6 +170,10 @@ class MainScene extends Phaser.Scene {
       CONSTANTS.KEYS.TILED.TILE_SETS.BUILDING_TILES,
       CONSTANTS.KEYS.IMAGES.BUILDING_TILES
     );
+    const interiors = map.addTilesetImage(
+      CONSTANTS.KEYS.TILED.TILE_SETS.INTERIORS,
+      CONSTANTS.KEYS.IMAGES.INTERIORS
+    );
 
     // Load the background layer
     this.layers.background = map.createLayer(
@@ -172,7 +187,7 @@ class MainScene extends Phaser.Scene {
     // Load the Buildings layer
     this.layers.building = map.createLayer(
       CONSTANTS.KEYS.TILED.LAYERS.BUILDING_LAYER,
-      buildingTileSet,
+      [buildingTileSet, interiors],
       0,
       0
     );

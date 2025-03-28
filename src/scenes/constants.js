@@ -11,6 +11,7 @@ export const CONSTANTS = {
       TILE_SETS: {
         TILES: "Tiles",
         BUILDING_TILES: "building_tilemap",
+        INTERIORS: "interiors",
       },
       LAYERS: {
         TILE_LAYER: "Tile Layer 1",
@@ -24,6 +25,7 @@ export const CONSTANTS = {
     IMAGES: {
       TILES: "tiles",
       BUILDING_TILES: "buildingTiles",
+      INTERIORS: "interiors",
       STUFFED_PEANUT: "stuffedPeanut",
       PHOTO_FRAME: "photoFrame",
     },
