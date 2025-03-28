@@ -103,10 +103,10 @@ class MainScene extends Phaser.Scene {
       CONSTANTS.KEYS.IMAGES.INTERIORS,
       "src/assets/tiles/interiors.png"
     );
-    // The third tileset defined in the Tilemap JSON file
+
     this.load.image(
-      CONSTANTS.KEYS.IMAGES.INTERIORS,
-      "src/assets/tiles/interiors.png"
+      CONSTANTS.KEYS.IMAGES.ROOMBUILDER,
+      "src/assets/tiles/room_builder.png"
     );
 
     // Items
@@ -175,10 +175,15 @@ class MainScene extends Phaser.Scene {
       CONSTANTS.KEYS.IMAGES.INTERIORS
     );
 
+    const room_builder = map.addTilesetImage(
+      CONSTANTS.KEYS.TILED.TILE_SETS.ROOMBUILDER,
+      CONSTANTS.KEYS.IMAGES.ROOMBUILDER
+    );
+
     // Load the background layer
     this.layers.background = map.createLayer(
       CONSTANTS.KEYS.TILED.LAYERS.TILE_LAYER,
-      tileSet,
+      [tileSet, room_builder],
       0,
       0
     );
