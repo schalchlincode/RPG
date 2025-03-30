@@ -202,8 +202,8 @@ class MainScene extends Phaser.Scene {
   #createEntities() {
     // Load at coordinates (100, 100) and force frame 0 of the sprite
     this.entities.player = this.physics.add.sprite(
-      100,
-      100,
+      500,
+      300,
       CONSTANTS.KEYS.SPRITES.PLAYER,
       0
     );
