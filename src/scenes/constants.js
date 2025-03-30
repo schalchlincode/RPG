@@ -15,8 +15,8 @@ export const CONSTANTS = {
         ROOMBUILDER: "room_builder",
       },
       LAYERS: {
-        TILE_LAYER: "Tile Layer 1",
-        BUILDING_LAYER: "Buildings",
+        FLOOR: "Floor",
+        FLOOR_DETAILS: "FloorDetails",
       },
     },
     SPRITES: {

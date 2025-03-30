@@ -5,7 +5,7 @@ class MainScene extends Phaser.Scene {
   // Game variables that are likely to change values over time
   state = {
     inventory: [], // Right now this array just holds string values
-    inventoryVisible: true,
+    inventoryVisible: false,
   };
 
   // Layers imported into phaser from Tiled - populated during phaser Create phase
@@ -182,7 +182,7 @@ class MainScene extends Phaser.Scene {
 
     // Load the background layer
     this.layers.background = map.createLayer(
-      CONSTANTS.KEYS.TILED.LAYERS.TILE_LAYER,
+      CONSTANTS.KEYS.TILED.LAYERS.FLOOR,
       [tileSet, room_builder],
       0,
       0
@@ -191,8 +191,8 @@ class MainScene extends Phaser.Scene {
 
     // Load the Buildings layer
     this.layers.building = map.createLayer(
-      CONSTANTS.KEYS.TILED.LAYERS.BUILDING_LAYER,
-      [buildingTileSet, interiors],
+      CONSTANTS.KEYS.TILED.LAYERS.FLOOR_DETAILS,
+      [room_builder, interiors],
       0,
       0
     );
