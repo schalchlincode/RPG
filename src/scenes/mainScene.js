@@ -3,14 +3,14 @@ import BaseScene from "./BaseScene";
 import InsideScene from "./insideScene";
 
 export default class MainScene extends BaseScene {
-  static KEY = "MainScene"
+  static KEY = "MainScene";
 
   constructor() {
-    super({ key: MainScene.KEY })
+    super({ key: MainScene.KEY });
   }
 
   preload() {
-    super.preload()
+    super.preload();
 
     // Tiled map JSON file
     this.load.tilemapTiledJSON(
@@ -61,7 +61,7 @@ export default class MainScene extends BaseScene {
   }
 
   update() {
-    super.update()
+    super.update();
   }
 
   #createMap() {
@@ -84,20 +84,24 @@ export default class MainScene extends BaseScene {
     );
 
     // Load the background layer
-    this.backgroundLayer = map.createLayer(
-      CONSTANTS.KEYS.TILED.LAYERS.FLOOR,
-      [tileSet, room_builder],
-      0,
-      0
-    ).setDepth(CONSTANTS.DEPTHS.Background);
+    this.backgroundLayer = map
+      .createLayer(
+        CONSTANTS.KEYS.TILED.LAYERS.FLOOR,
+        [tileSet, room_builder],
+        0,
+        0
+      )
+      .setDepth(CONSTANTS.DEPTHS.Background);
 
     // Load the Buildings layer
-    this.buildingLayer = map.createLayer(
-      CONSTANTS.KEYS.TILED.LAYERS.FLOOR_DETAILS,
-      [room_builder, interiors],
-      0,
-      0
-    ).setDepth(CONSTANTS.DEPTHS.Foreground);
+    this.buildingLayer = map
+      .createLayer(
+        CONSTANTS.KEYS.TILED.LAYERS.FLOOR_DETAILS,
+        [room_builder, interiors],
+        0,
+        0
+      )
+      .setDepth(CONSTANTS.DEPTHS.Foreground);
   }
 
   #createEntities() {
